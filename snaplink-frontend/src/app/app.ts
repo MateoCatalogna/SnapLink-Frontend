@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../app/enviroments/enviroment';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,7 @@ export class App {
     this.error = null;
     this.shortUrl = null;
 
-    this.http.post<any>('http://localhost:3000/short-url', { 
+    this.http.post<any>(`${environment.apiUrl}/short-url`, { 
       originalUrl: this.originalUrl 
     }).subscribe({
       next: (response) => {
@@ -37,7 +38,7 @@ export class App {
 
         if (response.shortUrl) {
             
-            this.shortUrl = `http://localhost:3000/short-url/${response.shortUrl}`;
+            this.shortUrl = `${environment.apiUrl}/short-url/${response.shortUrl}`;
             
         } else {
             console.error('ERROR: No encuentro shortCode en la respuesta');
